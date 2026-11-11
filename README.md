@@ -14,6 +14,9 @@ recent totals, the monthly daily-usage chart, the daily table, and the model bre
 
 ![Token usage and wallet panel in the DSH sidebar](docs/panel-light.png)
 
+<sub>Captured on v1.0.0. Since v1.1.0 the input/output and cache/requests detail under each
+total sits on its own line instead of being truncated.</sub>
+
 ## Features
 
 | Block | Content |

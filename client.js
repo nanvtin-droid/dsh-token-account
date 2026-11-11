@@ -163,7 +163,8 @@ window.__ModuleLoader__.load({
 .ta-kpi-label { color: var(--ta-muted); font-size: 11.5px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
 .ta-kpi-value { margin-top: 7px; font-size: 23px; font-weight: 640; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ta-kpi-value.is-small { font-size: 18px; }
-.ta-kpi-sub { margin-top: 5px; color: var(--ta-dim); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ta-kpi-sub { margin-top: 5px; display: flex; flex-direction: column; gap: 1px; color: var(--ta-dim); font-size: 11.5px; }
+.ta-kpi-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ta-wallets { display: flex; flex-direction: column; gap: 3px; margin-top: 7px; }
 .ta-wallet { display: flex; align-items: baseline; gap: 6px; font-variant-numeric: tabular-nums; }
 .ta-wallet-value { font-size: 23px; font-weight: 640; letter-spacing: -.02em; white-space: nowrap; }
@@ -478,12 +479,19 @@ window.__ModuleLoader__.load({
         { className: 'ta-kpi' },
         h('div', { className: 'ta-kpi-label' }, t('balance')),
         h('div', { className: 'ta-wallets' }, body),
-        sub ? h('div', { className: 'ta-kpi-sub', title: sub }, sub) : null,
+        sub ? h('div', { className: 'ta-kpi-sub', title: sub }, h('span', { className: 'ta-kpi-line' }, sub)) : null,
       )
     }
 
     function TokenKpi({ t, label, day, requests }) {
       const value = day ? day.total : 0
+      const input = day ? day.input : 0
+      const output = day ? day.output : 0
+      const cacheRead = day ? day.cacheRead : 0
+      const firstLine = `${t('input')} ${formatTokens(input)} · ${t('output')} ${formatTokens(output)}`
+      const secondLine = `${t('cacheRead')} ${formatTokens(cacheRead)}${
+        requests ? ` · ${formatInteger(requests)} ${t('requests')}` : ''
+      }`
       return h(
         'div',
         { className: 'ta-kpi' },
@@ -495,12 +503,25 @@ window.__ModuleLoader__.load({
         ),
         h(
           'div',
-          { className: 'ta-kpi-sub', title: label },
-          `${t('input')} ${formatTokens(day ? day.input : 0)} · ${t('output')} ${formatTokens(
-            day ? day.output : 0,
-          )} · ${t('cacheRead')} ${formatTokens(day ? day.cacheRead : 0)}${
-            requests ? ` · ${formatInteger(requests)} ${t('requests')}` : ''
-          }`,
+          { className: 'ta-kpi-sub' },
+          h(
+            'span',
+            {
+              className: 'ta-kpi-line',
+              title: `${t('input')} ${formatInteger(input)} · ${t('output')} ${formatInteger(output)}`,
+            },
+            firstLine,
+          ),
+          h(
+            'span',
+            {
+              className: 'ta-kpi-line',
+              title: `${t('cacheRead')} ${formatInteger(cacheRead)}${
+                requests ? ` · ${formatInteger(requests)} ${t('requests')}` : ''
+              }`,
+            },
+            secondLine,
+          ),
         ),
       )
     }
