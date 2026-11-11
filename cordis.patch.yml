@@ -1,0 +1,3 @@
+- insert:
+    - id: token-account
+      name: '@local/dsh-token-account'

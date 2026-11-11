@@ -1,0 +1,54 @@
+{
+  "name": "@local/dsh-token-account",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sidebar panel for account token usage, wallet balance, and daily/monthly usage overview.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "token-usage",
+    "balance",
+    "dashboard",
+    "sidebar"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nanvtin-droid/dsh-token-account.git"
+  },
+  "homepage": "https://github.com/nanvtin-droid/dsh-token-account#readme",
+  "bugs": {
+    "url": "https://github.com/nanvtin-droid/dsh-token-account/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test/host.test.mjs && node test/client.test.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  }
+}
